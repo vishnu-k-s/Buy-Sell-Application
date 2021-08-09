@@ -1,0 +1,3 @@
+{% include "socialaccount/snippets/provider_list.html" with process="login" %}
+
+<img id="googleimage" src="{% static 'images/google.png' %}" alt="Google" style="width: 30%;">

@@ -1,0 +1,199 @@
+ 
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+         <meta charset="utf-8" />
+         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+         <meta name="description" content="" />
+         <meta name="author" content="" />
+         <title>Buy | Sell</title>
+         <!-- Bootstrap icons-->
+         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+         <!-- Core theme CSS (includes Bootstrap)-->
+         <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+         <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+    </head>
+    <body>
+
+        <!-- Nav bar -->            
+        <!--fixed Nav-->    
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <div class="container-fluid">
+                <!-- Logo -->
+                <a class="navbar-brand " href="{% url 'home' %}">
+                    <img class="logo" src="{% static 'images/logo.png'%}" alt="">
+                </a>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
+                        </li>
+                    </ul>
+                    <!-- Search form -->
+                    <form method="POST" action="{% url 'search' %}">
+                        {% csrf_token %}
+                        <div id="searchdiv" class="input-group">
+                            <input type="text" name="search" class="form-control rounded" placeholder="Search" aria-label="Search"
+                            aria-describedby="search-addon" />
+                            <input type="submit" id="searchinput" class="btn btn-secondary" value="search">
+                        </div>
+                    </form>
+                    &nbsp; &nbsp;&nbsp;  
+                    <!-- Profile information -->
+                    <form class="d-flex">
+                        <!-- checking user is loged in or not -->
+                        {% if request.session.name %}
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                            <li class="nav-item dropdown bg-dark">
+                                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#"  data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img  class="profileimage rounded-circle"   src="{% static 'images/person.png'%}" alt="">    
+                                </a>
+                                <ul class="profileimagedropdown dropdown-menu" aria-labelledby="navbarDropdown">                              
+                                    <li>
+                                        <img  class="profileimage rounded-circle" src="{% static 'images/person.png'%}" alt="">
+                                        Hello, <br>  &nbsp; &nbsp;&nbsp; &nbsp;  {{ request.session.name }}   
+                                    </li>                    
+                                    <li><hr class="dropdown-divider" /></li>
+                                    <li><a class="dropdown-item" href="{% url 'viewprofile' %}">View and edit profile</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'myposts' %}">My posts</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'mypurchases' %}">My purchases</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                                </ul>
+                            </li>
+                        </ul> 
+                        {% endif %}
+                        &nbsp; &nbsp;
+                        <!-- checking user is loged using social authentication -->
+                        {% if user.is_authenticated %}
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                            <li class="nav-item dropdown bg-dark">
+                                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#"  data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img  class="profileimage rounded-circle"   src="{% static 'images/person.png'%}" alt="">    
+                                </a>
+                                <ul class="profileimagedropdown dropdown-menu" aria-labelledby="navbarDropdown">                              
+                                    <li>
+                                        <img  class="profileimage rounded-circle" src="{% static 'images/person.png'%}" alt="">
+                                        Hello, <br>  &nbsp; &nbsp;&nbsp; &nbsp;  {{ user.username }}    
+                                    </li>                    
+                                    <li><hr class="dropdown-divider" /></li>
+                                    <li><a class="dropdown-item" href=""></a></li>
+                                    <li><a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a></li>
+                                </ul>
+                            </li>
+                        </ul> 
+                        {% endif %}
+                        <!-- Showing login option if not loged in-->
+                        {% if not request.session.name %}
+                        <a  class="nav-link text-white pt-3" href="{% url 'loginpage'%}">Login</a> 
+                        {% endif %}
+                        &nbsp; &nbsp;
+                        <!-- Showing sell option if loged in-->
+                        {% if request.session.name %}
+                        <a  class="nav-link " href="{% url 'createpost' %}">
+                            <button type="button" class="sellbutton btn btn-light">+Sell</button>
+                        </a> 
+                        {% endif %}       
+                    </form>            
+                </div>
+            </div>
+        </nav>
+        <br><br><br>
+        <!--sub Nav -->
+        <nav>         
+            <div class="row">
+                <div class="col-md-3">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                        <li class="nav-item dropdown  p-1">
+                            <a class="nav-link dropdown-toggle text-dark" id="navbarDropdown" href="#"  data-bs-toggle="dropdown" aria-expanded="false">
+                                <b>ALL CATEGORIES</b> 
+                            </a>
+                            <ul class="menudropdown dropdown-menu" aria-labelledby="navbarDropdown">
+                                <div class="row p-4" >
+                                    <div class="col-3 ">
+                                        <!-- Displaying all categories from database -->
+                                        <a href="/?category">All</a>
+                                        {% if categories %}
+                                        <br>
+                                        {% for category in categories%}
+                                        <a href="/?category={{category.id}}">{{ category.name }}</a>
+                                        <br>                       
+                                        {% endfor %} 
+                                        {%else%}
+                                        <br>
+                                        <a href="/?category=1">Mobiles</a>
+                                        <br>
+                                        <a href="/?category=2">Cars</a>
+                                        <br>
+                                        <a href="/?category=3">Sports</a>
+                                        <br>
+                                        <a href="/?category=4">Books</a>
+                                        <br>
+                                        <a href="/?category=5">Bikes</a>
+                                        <br>
+                                        <a href="/?category=6">Electronics</a>
+                                        <br>
+                                        <a href="/?category=7">Others</a>
+                                        <br>
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-3">
+                                            <div class="col">
+                                                <a href="" class="sidemenu">Mobiles</a>
+                                                <li><a  href="#!" class="sidemenu">samsung</a></li>
+                                                <li><a  href="#!" class="sidemenu">nokia</a></li>
+                                                <li><a  href="#!" class="sidemenu">redmi</a></li>
+                                            </div>
+                                            <br><br><br>
+                                            <div class="col">
+                                                <a href="" class="sidemenu">Bikes</a>
+                                                <li><a  href="#!" class="sidemenu">rx-100</a></li>
+                                                <li><a  href="#!" class="sidemenu">duke</a></li>
+                                            </div>    
+                                    </div>
+                                    <div class="col-3 ">
+                                            <div class="col">
+                                                <a href="" class="sidemenu">Cars</a>
+                                                <li><a  href="#!" class="sidemenu">contessa</a></li>
+                                            </div>
+                                            <br><br><br>
+                                            <div class="col">
+                                                <a href="" class="sidemenu">Electronics</a>
+                                                <li><a  href="#!" class="sidemenu">fridge</a></li>
+                                            </div>             
+                                    </div>
+                                    <div class="col-3">
+                                            <div class="col">
+                                                <a href="" class="sidemenu">Books</a>
+                                                <li><a  href="#!" class="sidemenu">novels</a></li>
+                                            </div>
+                                            <br><br>
+                                            <div class="col">
+                                                <a href="" class="sidemenu">Sports</a>
+                                                <li><a  href="#!" class="sidemenu">cricket</a></li>
+                                                <li><a  href="#!" class="sidemenu">footbal</a></li>    
+                                            </div>    
+                                    </div>
+                                </div>    
+                            </ul>
+                        </li>
+                    </ul> 
+                </div>
+                <!-- displaying categories -->
+                <div class="col-md-8 pt-3">                    
+                    <ul class="navbarul">
+                        {% for category in categories%}
+                        <li><a href="/?category={{category.id}}">{{ category.name }}</a></li> &nbsp; &nbsp; &nbsp; &nbsp;
+                        {% endfor %}   
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        {% block content %} {% endblock %} 
+
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    </body>
+</html>

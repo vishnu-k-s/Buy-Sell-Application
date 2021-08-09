@@ -1,0 +1,68 @@
+
+{% extends 'buy_sell/basenav.html'%}
+{% load static %}
+{% block content %}
+             
+        <div class="container">
+            <div class="row">
+                <div class="card" >
+                    <!-- Sale badge-->
+                    <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">{{ data.status }}</div>
+                    <!-- Product image-->
+                    <img class="card-img-top" src="{{ data.image.url }}" alt="..." />                  
+                </div> 
+                <div class="row">
+                    <h4 class="text-center"> {{ data.name }}</h4>
+                </div>
+                <hr>
+                <div class="row ">
+                    <div class="col-10">
+                        <h3>Description</h3>
+                        <h4>{{ data.description }}</h4>
+                    </div>  
+                </div>
+                <hr>
+                <div class="row ">
+                    <div class="col-4">
+                        <h3>Price</h3>
+                        <h4> ₹{{ data.price }}</h4>
+                    </div>    
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col">
+                        <h3>Owner</h3>
+                        <h4>{{ data.ownerusername }}</h4>   
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                     <!-- if true Dont show buttons-->
+                    {% if  data.ownerusername == userdetails.username or user.is_authenticated or not request.session.name %}
+                    <!-- if false show buttons-->
+                    {%else%}
+
+                    <!-- Checking status of product -->
+                    <!-- if 'sale' show buttons else not show -->
+                    {% if data.status == 'sale' %}
+                    <a href="{% url 'chat' %}">
+                        <input class="text-center btn btn-dark" type="button" value="Chat with user" style="width: 103%;">
+                        <br><br>
+                    </a>
+                    <a href="{% url 'buyproductnow' %}">
+                        <input class=" text-center btn btn-dark" type="button" value="Buy" style="width: 103%;">
+                        <br><br>    
+                    </a>
+                    {% endif %}
+
+                    {% endif %}
+                </div>   
+            </div>   
+        </div>       
+        
+        <br><br><br><br>
+        <div class="">
+            {% include 'buy_sell/footer.html' %}
+        </div>
+
+{% endblock %}  

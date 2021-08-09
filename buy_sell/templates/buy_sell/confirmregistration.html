@@ -1,0 +1,42 @@
+
+{% extends 'buy_sell/basefixednav.html'%}
+{% load static %}
+{% block contentfixednav %}
+      
+        <div class="text-center pt-3">
+          <h4 class="alert-heading">Confirm Registration</h4>
+        </div>
+        
+        <div class="container-sm">
+          <form method="POST" action="{% url 'confirmregistration' %}">
+          {% csrf_token %}            
+            <div class="col pt-3">
+              <input type="text" class="form-control"  name='username' value="{{ username }}" placeholder="Username" required>
+            </div>         
+            <div class="form-group pt-3 ">
+              <input type="text" class="form-control" name='name' value="{{ name }}" placeholder="Name" required>
+            </div>         
+            <div class="form-group pt-3">
+              <input type="email" class="form-control" name='email' value="{{ email }}" placeholder="Email" required>
+            </div>         
+            <div class="form-group pt-3">
+              <input type="text" class="form-control" name='phone' value="{{ phone }}" placeholder="Phone" required>
+            </div>         
+            <div class="form-group pt-3">
+              <input type="text" class="form-control" name="password" value="{{ password }}" placeholder="password" required>
+            </div>         
+            <div class="form-group pt-3">
+              <input type="text" class="form-control" name="code" placeholder="Confirm Code" required>
+            </div>
+            <br>
+            <button type="submit" class="btn btn-success ">Create an Account</button>
+            <h6>already  have an account <a href="{% url 'loginpage' %}">login</a></h6>
+            {% if messages %}
+            {% for msg in messages%}       
+            <h5 style="color: red;">{{ msg }}</h5>
+            {% endfor%}
+            {% endif %}
+          </form>
+        </div>
+
+{% endblock %}  

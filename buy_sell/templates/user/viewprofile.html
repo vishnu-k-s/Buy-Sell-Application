@@ -1,0 +1,57 @@
+{% extends 'buy_sell/basenav.html'%}
+{% load static %}
+{% block content %}
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-3 ">
+                <a href="">View profile</a>
+                <br><br>
+                <a href="{% url 'editprofile'%}">
+                    <button class="btn btn-secondary">Edit profile</button>
+                </a>
+            </div>
+            <div class="col-9">
+                <div class="col">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <h3>View profile</h3>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td scope="row">
+                                    <h4>Basic information</h4>
+                                    NAME : <b>{{ singleuserdetails.name }}</b>
+                                    <br>
+                                    USER NAME : <b>{{ singleuserdetails.username }}</b>
+                                    <br>
+                                    PASSWORD : <b>{{ singleuserdetails.password }}</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td scope="row">
+                                    <h4>Contact information</h4>
+                                    EMAIL : <b>{{ singleuserdetails.email }}</b>
+                                    <br>
+                                    PHONE : <b>{{ singleuserdetails.phonenumber }}</b>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- footer -->
+<div class="fixed-bottom">
+    {% include 'buy_sell/footer.html' %}
+</div>
+
+{% endblock %}

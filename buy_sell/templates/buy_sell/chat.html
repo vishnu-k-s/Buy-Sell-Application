@@ -1,0 +1,24 @@
+{% extends 'buy_sell/basefixednav.html'%}
+{% load static %}
+{% load socialaccount %}
+{% block contentfixednav %}
+
+        <div class=" s_container bc4 text-center pt-5"> 
+            <form method="POST" action="{% url 'chat' %}">
+                {% csrf_token %}
+                <input type="text" name="message" placeholder="type your message here">
+                <button type="submit">Send</button>
+                {% if messages %}
+                {% for msg in messages%}
+                <h5>{{ msg }}</h5>
+                {% endfor%}
+                {% endif %}
+            </form>
+        </div>
+
+        <!-- Footer -->
+        <div class="fixed-bottom">
+            {% include 'buy_sell/footer.html' %}
+        </div>
+
+{% endblock %}

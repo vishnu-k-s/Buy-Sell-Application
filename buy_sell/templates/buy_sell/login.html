@@ -1,0 +1,39 @@
+
+{% extends 'buy_sell/basefixednav.html'%}
+{% load static %}
+{% load socialaccount %}
+{% block contentfixednav %}
+      
+        <div class="text-center pt-3">
+            <h4 class="alert-heading">Login Here</h4>
+        </div>
+        
+        <div class="container-sm">
+            <form method="POST" action="{% url 'login' %}">
+                {% csrf_token %}               
+                <div class="form-group pt-3">
+                    <input type="text" class="form-control" name='email' value="" placeholder="Email" required>
+                </div>               
+                <div class="form-group pt-3">
+                    <input type="password" class="form-control" name="password" value="" placeholder="Password" required>
+                </div>
+                <a id="forgotpassword" href="{% url 'forgotpasswordpage' %}">Forgot password?</a>
+                <br>
+                <button type="submit" class="btn btn-success">Login</button>               
+                <h6>don't have an account <a href="{% url 'registerpage' %}">create an account</a></h6>
+                {% if messages %}
+                {% for msg in messages%}
+                <h5>{{ msg }}</h5>
+                {% endfor%}
+                {% endif %}
+            </form>
+        </div>
+       
+        <div class="text-center">
+            <h4>OR</h4> 
+            <a href="{% provider_login_url 'google' %}" class="alert-link">
+                <img id="googleimage" src="{% static 'images/google.png' %}" alt="Google">
+            </a>           
+        </div>
+       
+{% endblock %}

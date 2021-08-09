@@ -1,0 +1,79 @@
+a{
+    text-decoration: none;
+}
+
+/*Base nav */
+.logo{
+    width: 90px;
+    height: 50px;
+}
+.profileimage{
+    width: 30px; 
+    height: 30px;
+}
+.profileimagedropdown{
+    width: auto;
+}
+.sellbutton{
+    border-radius: 30%;
+}
+.navbarul{
+    display: flex;
+    list-style: none;
+}
+
+
+/* basenav page*/
+#searchdiv{
+    width: 200px;
+}
+#searchinput{
+    width: 35%;
+}
+.sidemenu{
+    color: chocolate;
+}
+.menudropdown{
+    width: 930px; 
+    height: auto;    
+}
+/* index page */
+.productstatus{
+    top: 0.5rem;
+    right: 0.5rem;
+}
+
+
+/* Login page styles */
+.container-sm{
+    width: 28rem;
+}
+#forgotpassword{
+    float: right;
+}
+h5{
+    color: green;
+}
+#googleimage{
+    width:30%;
+}
+
+#logo{
+    height: 10px;
+}
+
+/* product details page*/
+h3{
+    color: darkgreen;
+}
+
+/*my purchases page*/
+.clearhistory{
+    float: right;
+}
+
+
+/*error page*/
+.error{
+    color: red;
+}
